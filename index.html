@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="brand/brand-tokens.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
   <style>
     /* Layout: nav with call to action; hero with the platform promise beside an upgrade preview; the collecting loop; the platform's three areas plus the listing check; early-access band */
     :root {
@@ -32,7 +32,6 @@
       /* Anton is used sparingly: h1, h2 and the slab grade only */
       --font-display: var(--ca-font-display);
       --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
-      --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
       color-scheme: light;
     }
     @media (prefers-color-scheme: dark) {
@@ -61,7 +60,7 @@
     p { margin: 0; }
     a { color: var(--accent); }
     a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+    .num { font-variant-numeric: tabular-nums; }
 
     /* Buttons */
     .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; font: 600 .95rem/1 var(--font-body); text-decoration: none; transition: background-color .15s, border-color .15s, transform .15s; }
@@ -105,10 +104,10 @@
     .kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; margin: 0; }
     .kv dt, .kv dd { padding: 6px 0; border-top: 1px solid var(--line); }
     .kv dt { color: var(--muted); }
-    .kv dd { margin: 0; text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+    .kv dd { margin: 0; text-align: right; font-weight: 500; font-variant-numeric: tabular-nums; }
     .kv dt:first-of-type, .kv dd:first-of-type { border-top: 0; }
     .kv .total { color: var(--ink); font-weight: 600; }
-    .verdict { display: inline-block; font: 600 .74rem/1 var(--font-data); letter-spacing: .06em; padding: 6px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); margin-right: 6px; }
+    .verdict { display: inline-block; font: 600 .8rem/1 var(--font-body); padding: 6px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); margin-right: 6px; }
     .muted { color: var(--muted); }
     .caption { font-size: .78rem; color: var(--muted); padding: 10px 18px; border-top: 1px solid var(--line); background: var(--bg); }
 
@@ -144,7 +143,7 @@
     .ext-bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--bg); }
     .ext-dots { display: flex; gap: 6px; }
     .ext-dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
-    .ext-url { flex: 1; font: .78rem/1 var(--font-data); color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+    .ext-url { flex: 1; font: .8rem/1 var(--font-body); color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
     .ext-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 16px; padding: 18px; }
     .ext-listing { display: grid; gap: 12px; align-content: start; }
     .ext-photo { aspect-ratio: 3 / 4; border-radius: 8px; background: linear-gradient(160deg, var(--accent-soft), var(--line)); }
@@ -158,7 +157,7 @@
     .ext-ok { color: #12704a; font-weight: 500; }
     .ext-m { color: var(--muted); font-size: .78rem; }
     .ext-row { display: flex; justify-content: space-between; }
-    .ext-pill { justify-self: start; font: 600 .7rem/1 var(--font-data); letter-spacing: .06em; padding: 5px 9px; border-radius: 999px; background: #dcf2e7; color: #12704a; }
+    .ext-pill { justify-self: start; font: 600 .76rem/1 var(--font-body); padding: 5px 9px; border-radius: 999px; background: #dcf2e7; color: #12704a; }
     .ext-actions { display: flex; gap: 14px; padding: 9px 12px; color: var(--accent); font-weight: 500; font-size: .8rem; }
 
     /* Early access band */
@@ -215,7 +214,7 @@
     <header class="hero">
       <div>
         <h1>Your edge as a collector.</h1>
-        <p class="lede">A buying assistant for serious comic collectors. It knows what you own, what you're hunting, and whether the listing in front of you makes sense for you, on the web and right on eBay listings with the browser extension.</p>
+        <p class="lede">A buying assistant for comic collectors that connects what you own, what you’re hunting, and your budget—so you can judge each listing with your whole collection in mind. On the web and right on eBay through the browser extension.</p>
         <div class="actions">
           <a class="btn btn-primary" href="mailto:hello@collectoradvantage.com?subject=Early%20access">Join early access</a>
           <a class="btn btn-secondary" href="#how">See how it works</a>
@@ -237,7 +236,7 @@
             <dt class="total">Net cost to upgrade</dt><dd class="total">$140–170</dd>
             <dt>Your upgrade budget</dt><dd>$150</dd>
           </dl>
-          <div><span class="verdict">NEAR YOUR BUDGET</span><span class="muted">a fair price for this upgrade</span></div>
+          <div><span class="verdict">Near your budget</span><span class="muted">a fair price for this upgrade</span></div>
         </div>
         <div class="caption">Illustrative preview</div>
       </aside>
@@ -267,7 +266,7 @@
               <div class="ext-head"><img src="brand/icons/icon-24.png" alt="" width="20" height="20">Collector's Advantage</div>
               <div class="ext-sec"><b>Incredible Hulk #181 · CGC 6.0</b><div class="ext-ok">✓ On your hunt · budget $1,600</div></div>
               <div class="ext-sec"><div class="ext-m">Matching sales · 6 recent</div><div class="ext-row"><span>Median</span><b class="num">$1,550</b></div><div class="ext-row"><span>This listing</span><b class="num">$1,425</b></div></div>
-              <div class="ext-sec"><span class="ext-pill">GOOD DEAL</span><div class="ext-m">8% under recent sales, within your budget</div></div>
+              <div class="ext-sec"><span class="ext-pill">Good deal</span><div class="ext-m">8% under recent sales, within your budget</div></div>
               <div class="ext-actions"><span>Add to collection</span><span>Add to hunt</span></div>
             </div>
           </div>
