@@ -5,27 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Collector's Advantage</title>
   <meta name="description" content="A buying assistant for serious comic collectors. It knows what you own, what you're hunting, and whether a listing makes sense for you. In development.">
+  <link rel="icon" href="brand/icons/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="brand/icons/icon-180.png">
+  <link rel="stylesheet" href="brand/brand-tokens.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
   <style>
     /* Layout: nav with call to action; hero with the platform promise beside an upgrade preview; the collecting loop; the platform's three areas plus the listing check; early-access band */
     :root {
-      --bg: #f6f7f9;
-      --surface: #ffffff;
-      --ink: #17202e;
-      --muted: #5b6578;
-      --line: #dde1e8;
-      --accent: #1f4fa3;
-      --accent-hover: #1a4389;
-      --accent-ink: #ffffff;
-      --accent-soft: #e6edf9;
+      /* Brand palette from brand/brand-tokens.css */
+      --bg: var(--ca-ivory);
+      --surface: var(--ca-white);
+      --ink: var(--ca-charcoal);
+      --muted: #5b6372;
+      --line: #e2ddd2;
+      --accent: var(--ca-cobalt);
+      --accent-hover: #27427f;
+      --accent-ink: var(--ca-white);
+      --accent-soft: #e4e8f3;
       --warn: #8a5a00;
       --warn-soft: #fbefd5;
-      --band: #17202e;
-      --band-ink: #f2f5fa;
-      --band-muted: #aeb8c9;
-      --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+      --band: var(--ca-charcoal);
+      --band-ink: #f5f2ea;
+      --band-muted: #b3bac6;
+      /* Anton is used sparingly: h1, h2 and the slab grade only */
+      --font-display: var(--ca-font-display);
       --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
       --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
       color-scheme: light;
@@ -33,7 +38,7 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #10141b; --surface: #171d27; --ink: #e7ebf2; --muted: #9aa4b6; --line: #2a3342;
-        --accent: #7ea6ef; --accent-hover: #9ab9f3; --accent-ink: #0d1626; --accent-soft: #1c2a44;
+        --accent: #8fa9e8; --accent-hover: #a9bdee; --accent-ink: #0d1626; --accent-soft: #1c2a44;
         --warn: #f0c060; --warn-soft: #3a2d10;
         --band: #1c2a44; --band-ink: #f2f5fa; --band-muted: #b7c3d8;
         color-scheme: dark;
@@ -49,7 +54,10 @@
       padding-right: max(16px, env(safe-area-inset-right, 0px));
     }
     .wrap { max-width: 1080px; margin: 0 auto; }
-    h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; letter-spacing: .01em; }
+    h1, h2, h3 { margin: 0; text-wrap: balance; }
+    /* Anton has a single weight; it's used only for the big headings */
+    h1, h2 { font-family: var(--font-display); font-weight: 400; letter-spacing: .01em; }
+    h3 { font-family: var(--font-body); font-weight: 600; letter-spacing: 0; }
     p { margin: 0; }
     a { color: var(--accent); }
     a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -66,14 +74,22 @@
 
     /* Nav */
     nav { display: flex; justify-content: space-between; align-items: center; padding-block: 22px; gap: 24px; }
-    .brand { font: 700 1.45rem/1 var(--font-display); letter-spacing: .02em; color: var(--ink); text-decoration: none; }
+    /* Supplied logo artwork, referenced directly; height follows the SVG's own proportions */
+    .brand { display: block; line-height: 0; flex-shrink: 0; }
+    .brand img { display: block; height: auto; }
+    .brand .logo-full { width: 260px; }
+    .brand .logo-mark { width: 52px; display: none; }
+    @media (max-width: 560px) {
+      .brand .logo-full { display: none; }
+      .brand .logo-mark { display: block; }
+    }
     .nav-links { display: flex; align-items: center; gap: 28px; font-size: .93rem; }
     .nav-links a:not(.btn) { color: var(--muted); text-decoration: none; }
     .nav-links a:not(.btn):hover { color: var(--ink); }
 
     /* Hero */
     .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: center; padding-block: 56px 88px; }
-    .hero h1 { font-size: clamp(2.8rem, 7vw, 4.6rem); line-height: .96; font-weight: 700; }
+    .hero h1 { font-size: clamp(2.8rem, 7vw, 4.6rem); line-height: 1; }
     .hero .lede { font-size: 1.18rem; color: var(--muted); max-width: 46ch; margin-top: 20px; }
     .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
     .note { margin-top: 18px; font-size: .88rem; color: var(--muted); }
@@ -81,9 +97,9 @@
     /* Upgrade preview, slab-label style */
     .slab { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(15, 25, 45, .06), 0 18px 40px rgba(15, 25, 45, .12); max-width: 400px; justify-self: end; width: 100%; }
     .slab-label { background: var(--accent); color: var(--accent-ink); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .slab-label .t { font: 600 1.12rem/1.2 var(--font-display); }
-    .slab-label .t span { font-weight: 400; opacity: .85; }
-    .slab-label .g { font: 700 2.3rem/1 var(--font-display); }
+    .slab-label .t { font: 600 1rem/1.3 var(--font-body); }
+    .slab-label .t span { font-weight: 400; opacity: .85; font-size: .9rem; }
+    .slab-label .g { font: 400 2.4rem/1 var(--font-display); }
     .slab-body { padding: 18px; display: grid; gap: 14px; font-size: .92rem; }
     .owned { background: var(--accent-soft); color: var(--accent); border-radius: 8px; padding: 9px 12px; font-weight: 500; font-size: .88rem; }
     .kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; margin: 0; }
@@ -104,13 +120,13 @@
 
     .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
     .steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: grid; gap: 8px; align-content: start; }
-    .steps li::before { content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font: 700 1.15rem/1 var(--font-display); margin-bottom: 6px; }
-    .steps h3 { font-size: 1.3rem; }
+    .steps li::before { content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font: 600 1rem/1 var(--font-body); margin-bottom: 6px; }
+    .steps h3 { font-size: 1.12rem; }
     .steps p { color: var(--muted); font-size: .95rem; }
 
     .areas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     .area { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; display: grid; gap: 10px; align-content: start; }
-    .area h3 { font-size: 1.55rem; }
+    .area h3 { font-size: 1.25rem; }
     .area p { color: var(--muted); }
     .anywhere { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; align-items: center; }
     .anywhere h3 { font-size: 1.55rem; }
@@ -136,7 +152,8 @@
     .ext-lines i { height: 9px; border-radius: 4px; background: var(--line); }
     .ext-lines i.short { width: 55%; }
     .ext-panel { border: 1px solid var(--line); border-radius: 10px; font-size: .84rem; display: grid; align-content: start; }
-    .ext-head { padding: 9px 12px; border-bottom: 1px solid var(--line); font-weight: 600; }
+    .ext-head { padding: 9px 12px; border-bottom: 1px solid var(--line); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .ext-head img { width: 20px; height: 20px; }
     .ext-sec { padding: 9px 12px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
     .ext-ok { color: #12704a; font-weight: 500; }
     .ext-m { color: var(--muted); font-size: .78rem; }
@@ -147,6 +164,7 @@
     /* Early access band */
     .band { background: var(--band); color: var(--band-ink); border-radius: 16px; padding: 48px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
     .band h2 { font-size: clamp(2rem, 4.4vw, 2.6rem); line-height: 1.02; }
+    .band-logo { display: block; width: 240px; max-width: 100%; height: auto; margin-bottom: 22px; }
     .band p { color: var(--band-muted); margin-top: 10px; max-width: 54ch; }
     .band .btn-primary { background: var(--band-ink); color: var(--band); }
     .band .btn-primary:hover { background: #ffffff; }
@@ -176,7 +194,16 @@
 <body>
   <div class="wrap">
     <nav aria-label="Main">
-      <a class="brand" href="/">Collector's Advantage</a>
+      <a class="brand" href="/" aria-label="Collector’s Advantage home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="brand/logos/ca-logo-horizontal-white.svg">
+          <img class="logo-full" src="brand/logos/ca-logo-horizontal-primary.svg" alt="Collector’s Advantage" width="260" height="32">
+        </picture>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="brand/logos/ca-mark-white.svg">
+          <img class="logo-mark" src="brand/logos/ca-mark-primary.svg" alt="Collector’s Advantage" width="52" height="39">
+        </picture>
+      </a>
       <div class="nav-links">
         <a href="#extension">The extension</a>
         <a href="#how">How it works</a>
@@ -237,7 +264,7 @@
               <div class="ext-lines"><i></i><i></i><i class="short"></i></div>
             </div>
             <div class="ext-panel">
-              <div class="ext-head">Collector's Advantage</div>
+              <div class="ext-head"><img src="brand/icons/icon-24.png" alt="" width="20" height="20">Collector's Advantage</div>
               <div class="ext-sec"><b>Incredible Hulk #181 · CGC 6.0</b><div class="ext-ok">✓ On your hunt · budget $1,600</div></div>
               <div class="ext-sec"><div class="ext-m">Matching sales · 6 recent</div><div class="ext-row"><span>Median</span><b class="num">$1,550</b></div><div class="ext-row"><span>This listing</span><b class="num">$1,425</b></div></div>
               <div class="ext-sec"><span class="ext-pill">GOOD DEAL</span><div class="ext-m">8% under recent sales, within your budget</div></div>
@@ -277,6 +304,7 @@
     <section class="early" aria-labelledby="early-title">
       <div class="band">
         <div>
+          <img class="band-logo" src="brand/logos/ca-logo-horizontal-white.svg" alt="Collector’s Advantage" width="240" height="30">
           <h2 id="early-title">Get in early</h2>
           <p>Collector's Advantage is in development. Join the early access list and we'll be in touch as it opens to more collectors.</p>
         </div>

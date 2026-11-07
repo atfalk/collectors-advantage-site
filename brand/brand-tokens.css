@@ -1,0 +1,16 @@
+/* Collector’s Advantage — original direction, v1 */
+:root {
+  --ca-cobalt: #304F9D;
+  --ca-ivory: #F5F2EA;
+  --ca-charcoal: #17202E;
+  --ca-white: #FFFFFF;
+  --ca-font-display: "Anton", "Arial Narrow", sans-serif;
+  --ca-font-body: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@font-face {
+  font-family: "Anton";
+  src: url("./fonts/Anton-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
