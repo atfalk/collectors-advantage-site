@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Collector's Advantage</title>
+  <meta name="description" content="A buying assistant for serious comic collectors. It knows what you own, what you're hunting, and whether a listing makes sense for you. In development.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <style>
+    /* Layout: nav with call to action; hero with the platform promise beside an upgrade preview; the collecting loop; the platform's three areas plus the listing check; early-access band */
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --ink: #17202e;
+      --muted: #5b6578;
+      --line: #dde1e8;
+      --accent: #1f4fa3;
+      --accent-hover: #1a4389;
+      --accent-ink: #ffffff;
+      --accent-soft: #e6edf9;
+      --warn: #8a5a00;
+      --warn-soft: #fbefd5;
+      --band: #17202e;
+      --band-ink: #f2f5fa;
+      --band-muted: #aeb8c9;
+      --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+      --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+      --font-data: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #10141b; --surface: #171d27; --ink: #e7ebf2; --muted: #9aa4b6; --line: #2a3342;
+        --accent: #7ea6ef; --accent-hover: #9ab9f3; --accent-ink: #0d1626; --accent-soft: #1c2a44;
+        --warn: #f0c060; --warn-soft: #3a2d10;
+        --band: #1c2a44; --band-ink: #f2f5fa; --band-muted: #b7c3d8;
+        color-scheme: dark;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font: 16px/1.6 var(--font-body);
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; letter-spacing: .01em; }
+    p { margin: 0; }
+    a { color: var(--accent); }
+    a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 8px; font: 600 .95rem/1 var(--font-body); text-decoration: none; transition: background-color .15s, border-color .15s, transform .15s; }
+    .btn-primary { background: var(--accent); color: var(--accent-ink); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+    .btn-secondary:hover { border-color: var(--muted); }
+    .btn-small { padding: 9px 14px; font-size: .88rem; }
+    @media (prefers-reduced-motion: no-preference) { .btn:active { transform: translateY(1px); } }
+
+    /* Nav */
+    nav { display: flex; justify-content: space-between; align-items: center; padding-block: 22px; gap: 24px; }
+    .brand { font: 700 1.45rem/1 var(--font-display); letter-spacing: .02em; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-size: .93rem; }
+    .nav-links a:not(.btn) { color: var(--muted); text-decoration: none; }
+    .nav-links a:not(.btn):hover { color: var(--ink); }
+
+    /* Hero */
+    .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: center; padding-block: 56px 88px; }
+    .hero h1 { font-size: clamp(2.8rem, 7vw, 4.6rem); line-height: .96; font-weight: 700; }
+    .hero .lede { font-size: 1.18rem; color: var(--muted); max-width: 46ch; margin-top: 20px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .note { margin-top: 18px; font-size: .88rem; color: var(--muted); }
+
+    /* Upgrade preview, slab-label style */
+    .slab { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(15, 25, 45, .06), 0 18px 40px rgba(15, 25, 45, .12); max-width: 400px; justify-self: end; width: 100%; }
+    .slab-label { background: var(--accent); color: var(--accent-ink); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .slab-label .t { font: 600 1.12rem/1.2 var(--font-display); }
+    .slab-label .t span { font-weight: 400; opacity: .85; }
+    .slab-label .g { font: 700 2.3rem/1 var(--font-display); }
+    .slab-body { padding: 18px; display: grid; gap: 14px; font-size: .92rem; }
+    .owned { background: var(--accent-soft); color: var(--accent); border-radius: 8px; padding: 9px 12px; font-weight: 500; font-size: .88rem; }
+    .kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; margin: 0; }
+    .kv dt, .kv dd { padding: 6px 0; border-top: 1px solid var(--line); }
+    .kv dt { color: var(--muted); }
+    .kv dd { margin: 0; text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+    .kv dt:first-of-type, .kv dd:first-of-type { border-top: 0; }
+    .kv .total { color: var(--ink); font-weight: 600; }
+    .verdict { display: inline-block; font: 600 .74rem/1 var(--font-data); letter-spacing: .06em; padding: 6px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); margin-right: 6px; }
+    .muted { color: var(--muted); }
+    .caption { font-size: .78rem; color: var(--muted); padding: 10px 18px; border-top: 1px solid var(--line); background: var(--bg); }
+
+    /* Sections */
+    section { padding-block: 72px; border-top: 1px solid var(--line); }
+    .section-head { display: grid; gap: 12px; max-width: 640px; margin-bottom: 40px; }
+    .section-head h2 { font-size: clamp(2rem, 4.4vw, 2.7rem); line-height: 1.02; }
+    .section-head p { color: var(--muted); font-size: 1.05rem; }
+
+    .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+    .steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: grid; gap: 8px; align-content: start; }
+    .steps li::before { content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font: 700 1.15rem/1 var(--font-display); margin-bottom: 6px; }
+    .steps h3 { font-size: 1.3rem; }
+    .steps p { color: var(--muted); font-size: .95rem; }
+
+    .areas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .area { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; display: grid; gap: 10px; align-content: start; }
+    .area h3 { font-size: 1.55rem; }
+    .area p { color: var(--muted); }
+    .anywhere { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; align-items: center; }
+    .anywhere h3 { font-size: 1.55rem; }
+    .anywhere p { color: var(--muted); }
+
+    /* Extension feature: copy beside a browser-window preview */
+    .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: center; }
+    .split-text { display: grid; gap: 14px; }
+    .split-text h2 { font-size: clamp(2rem, 4.4vw, 2.7rem); line-height: 1.02; }
+    .split-text p { color: var(--muted); font-size: 1.05rem; max-width: 48ch; }
+    .checks { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 10px; }
+    .checks li { display: flex; gap: 10px; align-items: baseline; }
+    .checks li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+    .ext { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(15, 25, 45, .06), 0 18px 40px rgba(15, 25, 45, .12); }
+    .ext-bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--bg); }
+    .ext-dots { display: flex; gap: 6px; }
+    .ext-dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+    .ext-url { flex: 1; font: .78rem/1 var(--font-data); color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+    .ext-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 16px; padding: 18px; }
+    .ext-listing { display: grid; gap: 12px; align-content: start; }
+    .ext-photo { aspect-ratio: 3 / 4; border-radius: 8px; background: linear-gradient(160deg, var(--accent-soft), var(--line)); }
+    .ext-lines { display: grid; gap: 8px; }
+    .ext-lines i { height: 9px; border-radius: 4px; background: var(--line); }
+    .ext-lines i.short { width: 55%; }
+    .ext-panel { border: 1px solid var(--line); border-radius: 10px; font-size: .84rem; display: grid; align-content: start; }
+    .ext-head { padding: 9px 12px; border-bottom: 1px solid var(--line); font-weight: 600; }
+    .ext-sec { padding: 9px 12px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
+    .ext-ok { color: #12704a; font-weight: 500; }
+    .ext-m { color: var(--muted); font-size: .78rem; }
+    .ext-row { display: flex; justify-content: space-between; }
+    .ext-pill { justify-self: start; font: 600 .7rem/1 var(--font-data); letter-spacing: .06em; padding: 5px 9px; border-radius: 999px; background: #dcf2e7; color: #12704a; }
+    .ext-actions { display: flex; gap: 14px; padding: 9px 12px; color: var(--accent); font-weight: 500; font-size: .8rem; }
+
+    /* Early access band */
+    .band { background: var(--band); color: var(--band-ink); border-radius: 16px; padding: 48px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: center; }
+    .band h2 { font-size: clamp(2rem, 4.4vw, 2.6rem); line-height: 1.02; }
+    .band p { color: var(--band-muted); margin-top: 10px; max-width: 54ch; }
+    .band .btn-primary { background: var(--band-ink); color: var(--band); }
+    .band .btn-primary:hover { background: #ffffff; }
+    .early { border-top: 0; padding-top: 16px; }
+
+    footer { padding-block: 28px 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: .84rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; }
+    footer .legal { max-width: 70ch; }
+
+    @media (max-width: 960px) {
+      .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .nav-links a:not(.btn) { display: none; }
+      .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 24px 56px; }
+      .slab { justify-self: stretch; max-width: none; }
+      .areas, .anywhere, .split { grid-template-columns: minmax(0, 1fr); }
+      .split { gap: 32px; }
+      .anywhere { gap: 8px; }
+      .band { grid-template-columns: minmax(0, 1fr); padding: 32px 24px; }
+      section { padding-block: 52px; }
+    }
+    @media (max-width: 560px) {
+      .steps { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="brand" href="/">Collector's Advantage</a>
+      <div class="nav-links">
+        <a href="#extension">The extension</a>
+        <a href="#how">How it works</a>
+        <a href="#platform">The platform</a>
+        <a class="btn btn-primary btn-small" href="mailto:hello@collectoradvantage.com?subject=Early%20access">Join early access</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <h1>Your edge as a collector.</h1>
+        <p class="lede">A buying assistant for serious comic collectors. It knows what you own, what you're hunting, and whether the listing in front of you makes sense for you, on the web and right on eBay listings with the browser extension.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="mailto:hello@collectoradvantage.com?subject=Early%20access">Join early access</a>
+          <a class="btn btn-secondary" href="#how">See how it works</a>
+        </div>
+        <p class="note">In development. Comics first, with cards to follow.</p>
+      </div>
+
+      <aside class="slab" aria-label="Preview of an upgrade check">
+        <div class="slab-label">
+          <div class="t">Amazing Spider-Man #300<br><span>Marvel · 1988 · CGC</span></div>
+          <div class="g">9.6</div>
+        </div>
+        <div class="slab-body">
+          <div class="owned">You own this issue in 9.4. This would be an upgrade.</div>
+          <dl class="kv">
+            <dt>Asking price + shipping</dt><dd>$420</dd>
+            <dt>Recent 9.6 sales</dt><dd>$400–460</dd>
+            <dt>Your 9.4, if sold</dt><dd>$250–280</dd>
+            <dt class="total">Net cost to upgrade</dt><dd class="total">$140–170</dd>
+            <dt>Your upgrade budget</dt><dd>$150</dd>
+          </dl>
+          <div><span class="verdict">NEAR YOUR BUDGET</span><span class="muted">a fair price for this upgrade</span></div>
+        </div>
+        <div class="caption">Illustrative preview</div>
+      </aside>
+    </header>
+
+    <section id="extension" aria-labelledby="extension-title">
+      <div class="split">
+        <div class="split-text">
+          <h2 id="extension-title">The answer, right on the listing.</h2>
+          <p>The Collector's Advantage browser extension sits beside any eBay listing you open. It confirms the exact book and grade, shows what matching copies actually sold for, and tells you how the price fits your hunt, your collection and your budget.</p>
+          <p>No more pricing a book across five tabs before you bid.</p>
+          <ul class="checks">
+            <li>Exact book, grade and version, confirmed</li>
+            <li>Real sales of matching copies, not guesses</li>
+            <li>A clear verdict against your budget</li>
+            <li>Duplicates, wants and upgrades flagged</li>
+          </ul>
+        </div>
+        <aside class="ext" aria-label="Preview of the browser extension on a listing">
+          <div class="ext-bar"><span class="ext-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ext-url">ebay.com/itm/…</span></div>
+          <div class="ext-body">
+            <div class="ext-listing" aria-hidden="true">
+              <div class="ext-photo"></div>
+              <div class="ext-lines"><i></i><i></i><i class="short"></i></div>
+            </div>
+            <div class="ext-panel">
+              <div class="ext-head">Collector's Advantage</div>
+              <div class="ext-sec"><b>Incredible Hulk #181 · CGC 6.0</b><div class="ext-ok">✓ On your hunt · budget $1,600</div></div>
+              <div class="ext-sec"><div class="ext-m">Matching sales · 6 recent</div><div class="ext-row"><span>Median</span><b class="num">$1,550</b></div><div class="ext-row"><span>This listing</span><b class="num">$1,425</b></div></div>
+              <div class="ext-sec"><span class="ext-pill">GOOD DEAL</span><div class="ext-m">8% under recent sales, within your budget</div></div>
+              <div class="ext-actions"><span>Add to collection</span><span>Add to hunt</span></div>
+            </div>
+          </div>
+          <div class="caption">Illustrative preview</div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="how" aria-labelledby="how-title">
+      <div class="section-head">
+        <h2 id="how-title">Built around how you actually collect</h2>
+        <p>Every tool feeds the next decision, so you spend less time searching and second-guessing, and more time buying the right copies.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Set your hunt</h3><p>The books you want, the grades that would do, and what you're willing to pay.</p></li>
+        <li><h3>Check any copy</h3><p>Confirm it's the exact book and grade, and see what matching copies really sold for.</p></li>
+        <li><h3>Buy and log it</h3><p>Your purchase and what it actually cost you go straight into your collection.</p></li>
+        <li><h3>Upgrade smarter</h3><p>Every listing is weighed against what you already own and the budget you set.</p></li>
+      </ol>
+    </section>
+
+    <section id="platform" aria-labelledby="platform-title">
+      <div class="section-head">
+        <h2 id="platform-title">One place for your collecting</h2>
+        <p>Three spaces that work together, so every buying decision has the full picture behind it.</p>
+      </div>
+      <div class="areas">
+        <div class="area"><h3>My Collection</h3><p>What you own, what you paid all-in, what it's worth now, and what has changed.</p></div>
+        <div class="area"><h3>My Hunt</h3><p>The books you want, the versions and grades that would do, your budget, and the upgrades you're after.</p></div>
+        <div class="area"><h3>My Opportunities</h3><p>Copies that match what you're hunting for, with the reason each one is worth a look.</p></div>
+      </div>
+    </section>
+
+    <section class="early" aria-labelledby="early-title">
+      <div class="band">
+        <div>
+          <h2 id="early-title">Get in early</h2>
+          <p>Collector's Advantage is in development. Join the early access list and we'll be in touch as it opens to more collectors.</p>
+        </div>
+        <a class="btn btn-primary" href="mailto:hello@collectoradvantage.com?subject=Early%20access">Join early access</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Collector's Advantage</span>
+      <span class="legal">Independent, and not affiliated with or endorsed by any marketplace or grading company. Values are estimates from public sales.</span>
+    </footer>
+  </div>
+</body>
+</html>
