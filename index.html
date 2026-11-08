@@ -3,8 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Collector Advantage</title>
+  <title>Collector Advantage · Your edge as a collector</title>
   <meta name="description" content="A buying assistant for serious comic collectors. It knows what you own, what you're hunting, and whether a listing makes sense for you. In development.">
+  <link rel="canonical" href="https://collectoradvantage.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Collector Advantage">
+  <meta property="og:title" content="Collector Advantage · Your edge as a collector">
+  <meta property="og:description" content="A buying assistant for comic collectors that connects what you own, what you're hunting, and your budget. In development.">
+  <meta property="og:url" content="https://collectoradvantage.com/">
+  <meta property="og:image" content="https://collectoradvantage.com/brand/icons/icon-180.png">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" href="brand/icons/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="brand/icons/icon-180.png">
   <link rel="stylesheet" href="brand/brand-tokens.css">
@@ -171,6 +179,9 @@
 
     footer { padding-block: 28px 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: .84rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; }
     footer .legal { max-width: 70ch; }
+    footer .fleft { display: grid; gap: 6px; align-content: start; }
+    footer .fnav { display: flex; gap: 16px; padding: 0; }
+    footer .fnav a { color: var(--muted); }
 
     @media (max-width: 960px) {
       .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -231,7 +242,7 @@
           <div class="owned">You own this issue in 9.4. This would be an upgrade.</div>
           <dl class="kv">
             <dt>Asking price + shipping</dt><dd>$420</dd>
-            <dt>Recent 9.6 sales</dt><dd>$400–460</dd>
+            <dt>Comparable 9.6 sales</dt><dd>$400–460</dd>
             <dt>Your 9.4, if sold</dt><dd>$250–280</dd>
             <dt class="total">Net cost to upgrade</dt><dd class="total">$140–170</dd>
             <dt>Your upgrade budget</dt><dd>$150</dd>
@@ -246,11 +257,11 @@
       <div class="split">
         <div class="split-text">
           <h2 id="extension-title">The answer, right on the listing.</h2>
-          <p>The Collector Advantage browser extension sits beside any marketplace listing you open. Today it works on eBay. It confirms the exact book and grade, shows what matching copies actually sold for, and tells you how the price fits your hunt, your collection and your budget.</p>
+          <p>The Collector Advantage browser extension sits beside a listing you open. Today it works on eBay. It confirms the exact book and grade, brings in comparable sales where available, and tells you how the price fits your hunt, your collection and your budget.</p>
           <p>No more pricing a book across five tabs before you bid.</p>
           <ul class="checks">
             <li>Exact book, grade and version, confirmed</li>
-            <li>Real sales of matching copies, not guesses</li>
+            <li>Price evidence from comparable sales, where available</li>
             <li>A clear verdict against your budget</li>
             <li>Duplicates, wants and upgrades flagged</li>
           </ul>
@@ -265,8 +276,8 @@
             <div class="ext-panel">
               <div class="ext-head"><img src="brand/icons/icon-24.png" alt="" width="20" height="20">Collector Advantage</div>
               <div class="ext-sec"><b>Incredible Hulk #181 · CGC 6.0</b><div class="ext-ok">✓ On your hunt · budget $1,600</div></div>
-              <div class="ext-sec"><div class="ext-m">Matching sales · 6 recent</div><div class="ext-row"><span>Median</span><b class="num">$1,550</b></div><div class="ext-row"><span>This listing</span><b class="num">$1,425</b></div></div>
-              <div class="ext-sec"><span class="ext-pill">Good deal</span><div class="ext-m">8% under recent sales, within your budget</div></div>
+              <div class="ext-sec"><div class="ext-m">Comparable sales · 6 recent</div><div class="ext-row"><span>Typical price</span><b class="num">$1,550</b></div><div class="ext-row"><span>This listing</span><b class="num">$1,425</b></div></div>
+              <div class="ext-sec"><span class="ext-pill">Good deal</span><div class="ext-m">8% under comparable sales, within your budget</div></div>
               <div class="ext-actions"><span>Add to collection</span><span>Add to hunt</span></div>
             </div>
           </div>
@@ -282,7 +293,7 @@
       </div>
       <ol class="steps">
         <li><h3>Set your hunt</h3><p>The books you want, the grades that would do, and what you're willing to pay.</p></li>
-        <li><h3>Check any copy</h3><p>Confirm it's the exact book and grade, and see what matching copies really sold for.</p></li>
+        <li><h3>Check any copy</h3><p>Confirm it's the exact book and grade, and see how the price compares with similar copies.</p></li>
         <li><h3>Buy and log it</h3><p>Your purchase and what it actually cost you go straight into your collection.</p></li>
         <li><h3>Upgrade smarter</h3><p>Every listing is weighed against what you already own and the budget you set.</p></li>
       </ol>
@@ -312,8 +323,15 @@
     </section>
 
     <footer>
-      <span>© 2026 Collector Advantage</span>
-      <span class="legal">Independent, and not affiliated with or endorsed by eBay or any grading company. Values are estimates based on recent comparable sales.</span>
+      <div class="fleft">
+        <span>© 2026 Collector Advantage</span>
+        <nav class="fnav" aria-label="Legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="mailto:hello@collectoradvantage.com">Contact</a>
+        </nav>
+      </div>
+      <span class="legal">Independent, and not affiliated with or endorsed by eBay or any grading company. eBay is a trademark of eBay Inc. Values are estimates from comparable sales, may be incomplete, and are not an appraisal or an offer to buy. Links to marketplaces may be affiliate links, and we may earn a commission if you buy through them.</span>
     </footer>
   </div>
 </body>
